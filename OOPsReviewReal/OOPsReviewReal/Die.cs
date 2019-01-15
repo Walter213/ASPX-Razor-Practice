@@ -8,6 +8,13 @@ namespace OOPsReviewReal
 {
     class Die
     {
+        // create a class level variable which will be an instance
+        //   of the system namespacemath class Random
+        // create a static instance which will be used for ALL DIE
+        //   instance created by the programmer/developer
+        // this instance of Random will be generated once on the first
+        //   Die instance that is created
+        private static Random _rnd = new Random();
         // Data Members
         // Usually Private
         private int _Side;
@@ -41,13 +48,14 @@ namespace OOPsReviewReal
                 {
                     // This is a acceptable value to keep
                     _Side = value;
+                    Roll();
                 }
                 else
                 {
                     // This is an unacceptable value
                     // Issue a user friendly error message
                     throw new Exception("Die cannot be " + value.ToString() + " sided. Die must be between 6 and 20 sided.");
-                }              
+                }
             }
         }
 
@@ -60,7 +68,86 @@ namespace OOPsReviewReal
         //  no need to internal validation
         // access to a value is managed by an auto implemented property
         //  MUST be done via the property
+        // if you wish your auto implement properties to have validation
+        //   then a good practice is to use a private set and have
+        //   the validation done somewhere/somehow/elsewhere in the class
 
-        public int Facevalue { get; set; }
+        public int Facevalue { get; private set; }
+
+        // public string Color{get; private set;}
+        //or
+        public string Color
+        {
+            get
+            {
+                return _Color;
+            }
+            set
+            {
+                //value.Trim() == "" || value == null
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new Exception("You must supply a color string for the die");
+                }
+                else
+                {
+                    _Color = value;
+                }
+            }
+        }
+
+        // Constructor 
+        // Optional
+        // purpose of a constructor is to ensure when an instance 
+        //   of this class is create, it will be create within a stable
+        //   state: ALWAYS
+        // you DO NOT call the constructor directly. It is called for you
+        //   when you create an instance of the class.
+        // if you dont not code a constructor then the system will assign
+        //   a default to each data member/auto implant property
+        //   internal member matching the data type of that item
+        // if you DO code a constructor then you are responsible for All 
+        //   constructors for the class
+
+        // syntax public classname ([list of parameters]) { coding block }
+
+        // Default Constructor
+        // is similar to the system default constructor
+
+        public Die()
+        {
+            // if you leave this coding block empty it would be the same
+            //   as using a system default constructor
+
+            // optionally
+            // you can set your own default values
+            _Side = 6;              // via data member
+            Color = "White";        // via property
+            Roll();                 // 
+        }
+
+        // Greedy Constructor
+        // this constructor will allow the user of the class to
+        //   pass in a set of values which will be used at the
+        //   time of instance creation to set the values of the
+        //   internal data members/auto properties
+        public Die(int Sides, string color, int facevalue)
+        {
+            Sides = Side;
+            _Color = color;
+            Roll(); //is an internal method of this Die class
+        }
+
+        // Behaviours (or called methods)
+        // are methods that can be used by the outside user to
+        //   a) affect values within the instance
+        //   b) use instance data to generate and return information
+        public void Roll ()
+        {
+            // Random can take a set of values and produce a integer
+            //   value between the two values, where the minimum value
+            //   is inclusive and the maximum value is exclusive
+            Facevalue = _rnd.Next(1, _Side + 1);
+        }
     }
 }
