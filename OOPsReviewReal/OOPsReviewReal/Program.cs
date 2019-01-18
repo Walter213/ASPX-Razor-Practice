@@ -9,7 +9,7 @@ namespace OOPsReviewReal
     class Program
     {
         static void Main(string[] args)
-        {
+        {   
             //new cause an instance (occurance) of the specified
             //   class to be created and placed in the
             //   receiving variable
@@ -21,6 +21,7 @@ namespace OOPsReviewReal
             //   class will not create a physical instance, just a 
             //   a pointer which can hold a physical instance
             Turn theTurn;
+            List<Turn> rounds = new List<Turn>();
 
             //new cause the constructor of a class to execute
             //   and a phyiscal instance to be created
@@ -49,7 +50,6 @@ namespace OOPsReviewReal
                             {
                                 //Turn is a non-static class
                                 theTurn = new Turn();
-                                List<Turn> rounds = new List<Turn>();
 
                                 //generate a new FaceValue
                                 Player1.Roll();
@@ -60,6 +60,7 @@ namespace OOPsReviewReal
                                 // .Player1 and .Facevalue are properties
                                 //  set          get
                                 theTurn.Player1 = Player1.Facevalue;
+                                theTurn.Player2 = Player2.Facevalue;
 
                                 //method a) default constructor and individual setting
 
@@ -69,7 +70,7 @@ namespace OOPsReviewReal
 
                                 //display the round results
                                 Console.WriteLine("Player 1 rolled {0}", theTurn.Player1);
-                                Console.WriteLine("Player 2 rolled {0}", Player2.Facevalue);
+                                Console.WriteLine("Player 2 rolled {0}", theTurn.Player2);
 
                                 if (Player1.Facevalue > Player2.Facevalue)
                                 {
@@ -128,11 +129,14 @@ namespace OOPsReviewReal
                         case "C":
                             {
                                 //Display the current players' stats
+                                
+                                DisplayCurrentPlayerStats(rounds);
                                 break;
                             }
                         case "X":
                             {
                                 //Display the final players' stats
+                                DisplayCurrentPlayerStats(rounds);
                                 Console.WriteLine("\nThank you for playing.");
                                 break;
                             }
@@ -152,7 +156,7 @@ namespace OOPsReviewReal
             } while (menuChoice.ToUpper() != "X");
         }//eomain
 
-        public static void DisplayCurrentPlayerStats(?????)
+        public static void DisplayCurrentPlayerStats(List<Turn> rounds)
         {
 
             int wins1 = 0;
@@ -160,7 +164,23 @@ namespace OOPsReviewReal
             int draws = 0;
 
             //travser the List<Turn> to calculate wins, losses, and draws
+            foreach(Turn item in rounds)
+            {
+                if (item.Player1 > item.Player2)
+                {
+                    wins1 = wins1 + 1;
+                }
 
+                else if (item.Player2 > item.Player1)
+                {
+                    wins2 += 1;
+                }
+
+                else
+                {
+                    draws++;
+                }
+            }
 
             //display the results
             Console.WriteLine("\n Total Rounds: " + (wins1 + wins2 + draws).ToString());

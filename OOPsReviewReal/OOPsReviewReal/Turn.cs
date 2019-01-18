@@ -15,14 +15,13 @@ namespace OOPsReviewReal
 
         public Turn()
         {
-            Player1 = 0;
-            Player2 = 0;
+
         }
 
-        public Turn(int PlayerNumberOne, int PlayerNumberTwo)
+        public Turn(int player1, int player2)
         {
-            Player1 = PlayerNumberOne;
-            Player2 = PlayerNumberTwo;
+            Player1 = player1;
+            Player2 = player2;
         }
     }
 }
