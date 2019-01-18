@@ -26,7 +26,7 @@ namespace OOPsReviewReal
             //new cause the constructor of a class to execute
             //   and a phyiscal instance to be created
             Die Player1 = new Die();       // Default Constructor
-            Die Player2 = new Die(6, "Green");     // Greedy Constructor
+            Die Player2 = new Die(6, "Green");    // Greedy Constructor
 
             //basic menu logic
             string menuChoice = "";
