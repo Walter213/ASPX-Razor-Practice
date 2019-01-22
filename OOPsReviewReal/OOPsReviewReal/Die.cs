@@ -35,7 +35,7 @@ namespace OOPsReviewReal
             get
             {
                 // Returns data of a specific datatype
-                return Side;
+                return _Side;
             }
 
             set
@@ -72,7 +72,7 @@ namespace OOPsReviewReal
         //   then a good practice is to use a private set and have
         //   the validation done somewhere/somehow/elsewhere in the class
 
-        public int Facevalue { get; private set; }
+        public int Facevalue { get; set; }
 
         // public string Color{get; private set;}
         //or
@@ -131,10 +131,10 @@ namespace OOPsReviewReal
         //   pass in a set of values which will be used at the
         //   time of instance creation to set the values of the
         //   internal data members/auto properties
-        public Die(int Sides, string color, int facevalue)
+        public Die(int Sides, string color)
         {
             Sides = Side;
-            _Color = color;
+            Color = color;
             Roll(); //is an internal method of this Die class
         }
 
@@ -147,7 +147,7 @@ namespace OOPsReviewReal
             // Random can take a set of values and produce a integer
             //   value between the two values, where the minimum value
             //   is inclusive and the maximum value is exclusive
-            Facevalue = _rnd.Next(1, _Side + 1);
+            Facevalue = _rnd.Next(1, Side + 1);
         }
     }
 }
