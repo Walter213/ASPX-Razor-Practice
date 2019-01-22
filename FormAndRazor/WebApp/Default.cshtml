@@ -2,6 +2,11 @@
     Layout = "~/_Layout.cshtml";
     Page.Title = "Home - Razor (Practice Assignment)";
 }
+
+@section head{
+    <link href="~/Content/MyCustomStyles.css" rel="stylesheet" />
+}
+
 @section banner{
 <h1>Home Page for Razor Form Samples</h1>
 }
@@ -10,4 +15,4 @@
 
 @section footer{
     &copy; CPSC1517 Nait, All Rights Reserved
-    }
+}
