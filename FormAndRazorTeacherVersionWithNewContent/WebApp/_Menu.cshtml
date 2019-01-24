@@ -1,0 +1,28 @@
+﻿<!-- using bootstrap to format and handle the menu -->
+
+<!-- Menu Area -->
+<div class="navbar navbar-default navbar-fixed-top">
+    <!-- branding area of the menu -->
+    <div class="navbar-header">
+        <a class="navbar-brand" style="font-size:x-large"
+            <strong>Gucci Stuff</strong>   
+        </a>
+    </div>
+    <!-- menu root area -->
+    <ul class="nav navbar-nav">
+        <!-- Root menu item -->
+        <li><a href="@Href("~/Default.cshtml")">Home</a></li>
+        <!-- Drop down sub menu -->
+        <li class="dropdown">
+            <!-- drop down menu item toggle -->
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Controls <b class="caret"></b></a>
+            <!-- code drop down submenu items -->
+                <ul class="dropdown-menu">
+                    <li><a href="@Href("~/Controls/TextBoxs.cshtml")">TextBoxes</a></li>
+                    <li><a href="@Href("~/Controls/RadioButtons.cshtml")">RadioButtons</a></li>
+                    <li><a href="@Href("~/Controls/CheckBoxs.cshtml")">CheckBoxes</a></li>
+                    <li><a href="@Href("~/Controls/DropDown.cshtml")">Dropdown (select)</a></li>
+                </ul>
+        </li>
+    </ul>
+</div>
