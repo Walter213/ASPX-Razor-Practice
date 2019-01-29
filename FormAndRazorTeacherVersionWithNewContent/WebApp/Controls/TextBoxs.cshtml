@@ -6,7 +6,7 @@
 
     // gather the data from the form
     //data will come in as strings
-    //if the .Forum does NOT exist, null is returned 
+    //if the .Forum does NOT exist, null is returned
     var leftside = Request.Form["leftinput"];
     var rightside = Request.Form["rightinput"];
     var thebutton = Request.Form["formbutton"]; //buttons have a value parameter
@@ -20,17 +20,54 @@
     <h1>Textboxes for Razor Form Samples</h1>
 }
 <!-- content body -->
-
+@if (IsPost)
+{
+    if (thebutton.Equals("reset"))
+    {
+        leftside = "";
+        rightside = "";
+    }
+    else
+    {
+        // validation of data coming in
+        if (string.IsNullOrEmpty(leftside) || string.IsNullOrEmpty(rightside))
+        {
+            <p>Enter data in both input fields (name and colour)</p>
+        }
+        else
+        {
+            if (thebutton.Equals("leftinput"))
+            {
+                <p>Welcome @leftside</p>
+            }
+            else
+            {
+                <p>Your Favorite Color is @rightside</p>
+            }
+        }
+    }
+}
+else
+{
+    <p>this forum is in initialization back</p>
+}
 <form id="forums" method="post">
-    <div class="col-md-6">
-        <label for="leftinput">Your Name:</label>
-        <input type="text" id="leftinput" name="leftinput" placeholder="enter your name" value="@leftside" />
-        <button type="submit" id="formbutton" name="formbutton" class="btn" value="leftinput">Press Left</button>
+    <div class="row">
+        <div class="col-md-6">
+            <label for="leftinput">Your Name:</label>
+            <input type="text" id="leftinput" name="leftinput" placeholder="enter your name" value="@leftside" />
+            <button type="submit" id="formbutton" name="formbutton" class="btn" value="leftinput">Press Left</button>
+        </div>
+        <div class="col-md-6">
+            <label for="rightinput">Your Favourite Color:</label>
+            <input type="text" id="rightinput" name="rightinput" placeholder="enter your color" value="@rightside" />
+            <button type="submit" id="formbutton" name="formbutton" class="btn" value="rightinput">Press Right</button>
+        </div>
     </div>
-    <div class="col-md-6">
-        <label for="rightinput">Your Favourite Color:</label>
-        <input type="text" id="rightinput" name="rightinput" placeholder="enter your color" value="@rightside"  />
-        <button type="submit" id="formbutton" name="formbutton" class="btn" value="rightinput">Press Right</button>
+    <div class="row">
+        <div class="col-md-offset-5">
+            <button type="reset" id="formbuttom" name="formbutton" class="btn" value="reset">Reset</button>
+        </div>
     </div>
 </form>
 
