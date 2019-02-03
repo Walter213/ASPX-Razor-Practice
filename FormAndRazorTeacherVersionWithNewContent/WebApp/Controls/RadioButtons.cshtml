@@ -3,11 +3,10 @@
     Page.Title = "Radiobuttons";
     var language = Request.Form["languagegroup"];
     var script = Request.Form["scriptgroup"];
-    var thebutton = Request.Form["formbutton"];
     // These ifs are required because .Equals() is used on the checked parameter in our form
     //   on the first pass of the page, language and script will be null.
     // .Equals() does not like nulls
-    if (language == null)
+    if (language == null)    
     {
         language = "";
     }
@@ -27,36 +26,27 @@
 
 @if (IsPost)
 {
-    // Which button was pressed
-    if (thebutton.Equals("Clear"))
+    if (string.IsNullOrEmpty(language) || string.IsNullOrEmpty(script))
     {
-        language = "";
-        script = "";
+        <p><span style="color: gold">Make a choice from both groups</span></p>
     }
     else
     {
-        if (string.IsNullOrEmpty(language) || string.IsNullOrEmpty(script))
+        if (language.Equals("C#"))
         {
-            <p><span style="color: gold">Make a choice from both groups</span></p>
+            <p>You have chosen C# which you will greatly CPSC1517 because we are coding with C#</p>
         }
         else
         {
-            if (language.Equals("C#"))
-            {
-                <p>You have chosen C# which you will greatly CPSC1517 because we are coding with C#</p>
-            }
-            else
-            {
-                <p>You suck at CPSC1517 because we are coding with C#</p>
-            }
-            if (script.Equals("Razor"))
-            {
-                <p>You have chosen Razor which you will greatly CPSC1517 because we are coding with Razor to process the form</p>
-            }
-            else
-            {
-                <p>You suck at CPSC1517 because we are coding with Razor to process the form</p>
-            }
+            <p>You suck at CPSC1517 because we are coding with C#</p>
+        }
+        if (script.Equals("Razor"))
+        {
+            <p>You have chosen Razor which you will greatly CPSC1517 because we are coding with Razor to process the form</p>
+        }
+        else
+        {
+            <p>You suck at CPSC1517 because we are coding with Razor to process the form</p>
         }
     }
 }
@@ -78,8 +68,6 @@
         <input type="radio" id="scriptgroup" name="scriptgroup" value="Razor" checked="@(script.Equals("Razor")?true:false)" />&nbsp;&nbsp;Razor <br />
         <input type="radio" id="scriptgroup" name="scriptgroup" value="PHP" checked="@(script.Equals("PHP")?true:false)" />&nbsp;&nbsp;PHP <br /><br />
         <button type="submit" id="formbutton" name="formbutton" value="Submit" class="btn-primary">Submit</button>
-        &nbsp;&nbsp;
-        <button type="submit" id="formbutton" name="formbutton" value="Clear" class="btn">Clear</button>
     </div>
 </form>
 
