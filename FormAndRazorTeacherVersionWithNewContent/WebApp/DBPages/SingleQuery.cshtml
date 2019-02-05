@@ -5,6 +5,7 @@
     var searcharg = Request.Form["searcharg"];
     var regionid = "";
     var description = "";
+    var thebutton = Request.Form["formbutton"];
 
     // remember the 1st pass of the page, seatcharg will be null BUT for the database query it needs to be a number
     if (string.IsNullOrEmpty(searcharg))
@@ -17,7 +18,7 @@
 
     // create your SQL command that you wish to execute a placeholder @n will be used for the
     //  query argument. The query command can be coded on multiple physical lines
-    var querycommand = "Select RegionID, RegionDescriptiob " + "FROM Region " + "WHERE RegionID = @0";
+    var querycommand = "Select RegionID, RegionDescription " + "FROM Region " + "WHERE RegionID = @0";
 
     // execute the sql query command against the database
     // .QuerySingle() used when you expect a single record to be returned
@@ -35,11 +36,48 @@
     <h1>Database: Single Query</h1>
 }
 
+@if(IsPost)
+{
+    if (thebutton.Equals("clear"))
+    {
+        regionid = "";
+        description = "";
+        searcharg = "0";
+    }
+    else
+    {
+        //.Query.Single() uses == null to test for no results
+        //.Query() uses .Count() == 0 to test for no results
+        if(results == null)
+        {
+            //removing old results
+            regionid = "";
+            description = "";
+            <p><span style="color:aqua">There is no region for the supplied region id.</span></p>
+        }
+        else
+        {
+            // there is a record to display
+            // How does one access the data on the record?
+
+            // There are 2 ways to access a column on your record
+            //a) using an index for the column eg. xxxx[index]
+            //b) using the column title property name eg. xxxx.columnname
+
+            // you must be concerned with non string datatypes being returns as part of your results.
+            // output fields expect strings.
+            // var variables obtain their datatype when first used.
+            regionid = results["0"];
+            description = results.description;
+        }
+    }
+}
+
 <form id="theform" method="post">
     <div class="row">
         <div class="col-md-4">
             <label for="searcharg">Enter Region ID:</label>
-            <input type="text" id="searcharg" name="searcharg" placeholder="enter region id" value="@searcharg" />
+            <input type="number" id="searcharg" name="searcharg" placeholder="enter region id" step="1" min="0" value="@searcharg" />
             <button type="submit" id="formbutton" name="formbutton" class="btn btn-primary" value="search">Search</button>
             &nbsp;&nbsp;
             <button type="submit" id="formbutton" name="formbutton" class="btn" value="clear">Clear</button>
