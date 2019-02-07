@@ -50,7 +50,7 @@
 
         //DATABASE IS ALREADY ATTACHED
         //create coomand
-        var querycommand = "SELECT ProductID" + "FROM Products " + "WHERE CategoryID = @0";
+        var querycommand = "SELECT ProductID " + "FROM Products " + "WHERE CategoryID = @0";
 
         //execute using .Query() foreign key lookup 1:m
         var results = db.Query(querycommand, categorylist);
