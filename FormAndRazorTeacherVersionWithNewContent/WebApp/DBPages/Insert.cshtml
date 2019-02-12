@@ -15,6 +15,18 @@
     var selectedcategory = "";
     var discontinued = "";
 
+    var db = Database.Open("NWDB");
+
+    var catcommand = "SELECT CategoryID, CategoryName "
+            + "FROM Categories "
+            + "ORDER BY CategoryName";
+    // the command will return 0, 1 or more records
+    //therefore use .Query()
+    var catResults = db.Query(catcommand);
+    var supcommand = "SELECT SupplierID, CompanyName "
+                    + "FROM Suppliers "
+                    + "ORDER BY CompanyName";
+    var supResults = db.Query(supcommand);
 }
 @section head{
     <link href="~/Content/MyCustomStyles.css" rel="stylesheet" />
@@ -59,9 +71,6 @@
         //user friendly error handling
         try
         {
-
-            //connect to db
-            var db = Database.Open("NWDB");
             //create sql insert command
             //note the number and position of placeholders for each supplied field
             var insertcommand = "INSERT INTO PRODUCTS (ProductName, SupplierID, CategoryID, QuantityPerUnit, " + "UnitPrice, UnitsInStock, UnitsOnOrder, ReorderLevel, " + "Discontinued) "
@@ -76,8 +85,8 @@
             // need insertcommand and productname, the rest is optional
 
             db.Execute(insertcommand, productname,
-                string.IsNullOrEmpty(selectedsupplier) ? null : selectedsupplier,
-                string.IsNullOrEmpty(selectedcategory) ? null : selectedcategory,
+                selectedsupplier.Equals("0") ? null : selectedsupplier,
+                selectedcategory.Equals("0") ? null : selectedcategory,
                 string.IsNullOrEmpty(quantityperunit) ? null : quantityperunit,
                 string.IsNullOrEmpty(unitprice) ? null : unitprice,
                 string.IsNullOrEmpty(unitsinstock) ? null : unitsinstock,
@@ -127,10 +136,44 @@
             <!-- the title attribute creates the tooltip for the control-->
             <input name="ProductName" id="ProductName" type="text" value="@productname"
                    title="Product Name." /><br />
-            <input name="SupplierID" id="SupplierID" type="number" value="@selectedsupplier"
-                   step="1" min="1" /><br />
-            <input name="CategoryID" id="CategoryID" type="number" value="@selectedcategory"
-                   step="1" min="1" /><br />
+            <select id="SupplierID" name="SupplierID">
+                <option value="0">select ...</option>
+                <!--  loop code here-->
+                @foreach (var supitem in supResults)
+                {
+                    if (selectedsupplier == supitem[0].ToString())
+                    {
+                        <option value="@supitem[0]" selected>
+                            @supitem[1]
+                        </option>
+                    }
+                    else
+                    {
+                        <option value="@supitem[0]">
+                            @supitem[1]
+                        </option>
+                    }
+                }
+            </select><br />
+            <select id="CategoryID" name="CategoryID">
+                <option value="0">select ...</option>
+                <!--  loop code here-->
+                @foreach (var catitem in catResults)
+                {
+                    if (selectedcategory == catitem[0].ToString())
+                    {
+                        <option value="@catitem.CategoryID" selected>
+                            @catitem[1]
+                        </option>
+                    }
+                    else
+                    {
+                        <option value="@catitem.CategoryID">
+                            @catitem[1]
+                        </option>
+                    }
+                }
+            </select><br />
             <input name="QuantityPerUnit" id="QuantityPerUnit" type="text"
                    value="@quantityperunit" /><br />
             <input name="UnitPrice" id="UnitPrice" type="number" value="@unitprice"
