@@ -1,0 +1,2 @@
+www.w3.org/waI/tutorials/forms/validation
+www.mikesdotnetting.com/article/191/validation-in-Razor-web-pages-2
