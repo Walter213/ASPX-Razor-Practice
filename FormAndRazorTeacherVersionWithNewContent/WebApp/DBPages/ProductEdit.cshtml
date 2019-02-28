@@ -125,6 +125,7 @@
         {
             var updatecommand = "UPDATE products SET " + "ProductName = @0, " + "SupplierID = @1, " + "CategoryID = @2, " + "QuantityPerUnit = @3, " + "UnitPrice = @4, "
                  + "UnitsInStock = @5, " + "UnitsOnOrder = @6, " + "ReoderLevel = @7, " + "Discontinued = @8 " + "WHERE ProductID = @9";
+
             var rowsaffected = db.Execute(updatecommand, productname,
                 supplierid.Equals("0") ? null : supplierid,
                 categoryid.Equals("0") ? null : categoryid,
