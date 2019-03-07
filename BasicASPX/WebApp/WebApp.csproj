@@ -157,7 +157,7 @@
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="SamplePages\BasicControls.aspx" />
-    <Content Include="SamplePages\FirstPage.aspx" />
+    <Content Include="SamplePages\HelloWorld.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -210,6 +210,7 @@
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DDLClass.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -228,12 +229,12 @@
     <Compile Include="SamplePages\BasicControls.aspx.designer.cs">
       <DependentUpon>BasicControls.aspx</DependentUpon>
     </Compile>
-    <Compile Include="SamplePages\FirstPage.aspx.cs">
-      <DependentUpon>FirstPage.aspx</DependentUpon>
+    <Compile Include="SamplePages\HelloWorld.aspx.cs">
+      <DependentUpon>HelloWorld.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SamplePages\FirstPage.aspx.designer.cs">
-      <DependentUpon>FirstPage.aspx</DependentUpon>
+    <Compile Include="SamplePages\HelloWorld.aspx.designer.cs">
+      <DependentUpon>HelloWorld.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
