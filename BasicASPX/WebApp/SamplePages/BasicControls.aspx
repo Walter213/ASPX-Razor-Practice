@@ -48,6 +48,7 @@
             <td>
                 <asp:DropDownList ID="CollectionList" runat="server">
                 </asp:DropDownList>
+                <asp:Button ID="ListSubmit" runat="server" Text="List Submit" OnClick="ListSubmit_Click" />
             </td>
         </tr>
         <tr>
@@ -56,8 +57,7 @@
         </tr>
         <tr>
             <td colspan="2" align="center">
-                <asp:Label ID="OutputMessage" runat="server" ></asp:Label></td>
-
+                <asp:Label ID="OutputMessage" runat="server" ></asp:Label></td>                
         </tr>
     </table>
     
