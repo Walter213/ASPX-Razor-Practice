@@ -16,7 +16,50 @@
 
         </div>
     </div>
-  
+    <%-- Entry all validation controls in one group area --%>  
+    <asp:RequiredFieldValidator ID="RequiredFieldFirstName" runat="server" ErrorMessage="First Name is required." Display="none"
+        SetFocusOnError="true" ForeColor="Firebrick" ControlToValidate="FirstName"></asp:RequiredFieldValidator>
+    <asp:RequiredFieldValidator ID="RequiredFieldLastName" runat="server" ErrorMessage="Last Name is required." Display="none"
+        SetFocusOnError="true" ForeColor="Firebrick" ControlToValidate="LastName"></asp:RequiredFieldValidator>
+    <asp:RequiredFieldValidator ID="RequiredFieldStreetAddress1" runat="server" ErrorMessage="Street Address 1 is required." Display="none"
+        SetFocusOnError="true" ForeColor="Firebrick" ControlToValidate="StreetAddress1"></asp:RequiredFieldValidator>
+    <asp:RequiredFieldValidator ID="RequiredFieldCity" runat="server" ErrorMessage="City is required." Display="none"
+        SetFocusOnError="true" ForeColor="Firebrick" ControlToValidate="City"></asp:RequiredFieldValidator>
+    <asp:RequiredFieldValidator ID="RequiredFieldPostalCode" runat="server" ErrorMessage="PostalCode is required." Display="none"
+        SetFocusOnError="true" ForeColor="Firebrick" ControlToValidate="PostalCode"></asp:RequiredFieldValidator>
+    <asp:RequiredFieldValidator ID="RequiredFieldEmaillAddress" runat="server" ErrorMessage="Emaill Address is required." Display="none"
+        SetFocusOnError="true" ForeColor="Firebrick" ControlToValidate="EmailAddress"></asp:RequiredFieldValidator>
+    <asp:RequiredFieldValidator ID="RequiredFieldCheck Answer" runat="server" ErrorMessage="You need to check mark the box idiot" Display="none"
+        SetFocusOnError="true" ForeColor="Firebrick" ControlToValidate="CheckAnswer"></asp:RequiredFieldValidator>
+
+    <%-- Since we have no control to demostrate a range on, the streetaddress2 control will be used
+        we will simulate a survey question fo strongly liked to strongly disliked with a value 1 to 5--%>
+
+    <asp:RangeValidator ID="RangeStreetAddress" runat="server" ErrorMessage="Range test simulation using streetaddress 2" Display="None" 
+        SetFocusOnError="true" ForeColor="Firebrick" ControlToValidate="StreetAddress2" MaximumValue="5" MinimumValue="1" Type="Integer"></asp:RangeValidator>
+    <asp:RegularExpressionValidator ID="RegularExpressionPostalCode" runat="server" ErrorMessage="Invalid Postal Code format AnAnAn" Display="None"
+        SetFocusOnError="true" ForeColor="Firebrick" ControlToValidate="PostalCode" ValidationExpression="[a-zA-Z][0-9][a-zA-Z][0-9][a-zA-Z][0-9]"
+        ></asp:RegularExpressionValidator>
+
+    <%-- Datatype compare --%>
+    <asp:CompareValidator ID="CompareEmailAddress" runat="server" ErrorMessage="Invalid Email Address" Display="None" 
+        SetFocusOnError="true" ForeColor="Firebrick" ControlToValidate="EmailAddress" Type="string" Operator="DataTypeCheck"></asp:CompareValidator>
+    
+    <%-- Specified constant value --%>
+    <asp:CompareValidator ID="CompareCheckAnswer" runat="server" ErrorMessage="Incorrect Answer to skill testing question" Display="None" 
+        SetFocusOnError="true" ForeColor="Firebrick" ControlToValidate="CheckAnswer" Type="string" Operator="Equal" ValueToCompare="15"></asp:CompareValidator>
+
+    <%-- compare between the controls 
+
+     <asp:CompareValidator ID="CompareConfirmPassword" runat="server" ErrorMessage="Incorrect Password, Please Try Again" Display="None" 
+        SetFocusOnError="true" ForeColor="Firebrick" ControlToValidate="ConfirmPassword" Type="string" Operator="Equal" ControlToCompare="PassWord"
+        ></asp:CompareValidator> --%>
+
+    <%-- display the error message on the form this example will use the Validation Summary control--%>
+
+    <asp:ValidationSummary ID="ValidationSummary" runat="server" HeaderText="Please fill in the fields that are required" 
+        CssClass="alert alert-danger"/>
+
     <div class="row">
         <div class ="col-md-6">
             <fieldset class="form-horizontal">
@@ -85,11 +128,11 @@
         <div class="col-md-6">   
             <div class="col-md-offset-2">
                 <p>
-                    <asp:Button ID="Submit" runat="server" Text="Submit" />&nbsp;&nbsp;
-                    <asp:Button ID="Clear" runat="server" Text="Clear" CausesValidation="true"  />
+                    <asp:Button ID="Submit" runat="server" Text="Submit" OnClick="Submit_Click"/>&nbsp;&nbsp;
+                    <asp:Button ID="Clear" runat="server" Text="Clear" CausesValidation="true" OnClick="Clear_Click"  />
                 </p>
                 <asp:Label ID="Message" runat="server" ></asp:Label><br />
-            
+                <asp:GridView ID="GridviewCollectionContest" runat="server"></asp:GridView>
             </div>
         </div>
     </div>

@@ -215,6 +215,7 @@
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
     <Compile Include="GridViewCollection.cs" />
+    <Compile Include="GridviewCollectionContest.cs" />
     <Compile Include="SamplePages\ContestEntry.aspx.cs">
       <DependentUpon>ContestEntry.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
