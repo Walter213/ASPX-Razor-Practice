@@ -9,7 +9,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{F10E3C34-766E-4191-A82D-89B2CFCF6985}</ProjectGuid>
+    <ProjectGuid>{2F9860EA-8367-4E56-8156-2CBB4FECB2A6}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -162,7 +162,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
-    <Content Include="SamplePages\Simple Queries.aspx" />
+    <Content Include="SamplePages\SimpleQueries.aspx" />
+    <Content Include="SamplePages\SqlProcQueries.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -226,12 +227,19 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SamplePages\Simple Queries.aspx.cs">
-      <DependentUpon>Simple Queries.aspx</DependentUpon>
+    <Compile Include="SamplePages\SimpleQueries.aspx.cs">
+      <DependentUpon>SimpleQueries.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SamplePages\Simple Queries.aspx.designer.cs">
-      <DependentUpon>Simple Queries.aspx</DependentUpon>
+    <Compile Include="SamplePages\SimpleQueries.aspx.designer.cs">
+      <DependentUpon>SimpleQueries.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SamplePages\SqlProcQueries.aspx.cs">
+      <DependentUpon>SqlProcQueries.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SamplePages\SqlProcQueries.aspx.designer.cs">
+      <DependentUpon>SqlProcQueries.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
@@ -270,13 +278,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NorthWindSystem.Data\NorthWindSystem.Data.csproj">
-      <Project>{c1f491fc-7f43-48a1-970a-1cc7a7307736}</Project>
-      <Name>NorthWindSystem.Data</Name>
+    <ProjectReference Include="..\NorthwindSystem.Data\NorthwindSystem.Data.csproj">
+      <Project>{7c495435-7d05-4da1-a7f0-f6939d2e4d34}</Project>
+      <Name>NorthwindSystem.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NorthWindSystem\NorthWindSystem.csproj">
-      <Project>{fff6bf67-29cf-47b3-bbe5-12733b13251d}</Project>
-      <Name>NorthWindSystem</Name>
+    <ProjectReference Include="..\NorthwindSystem\NorthwindSystem.csproj">
+      <Project>{6fa708c0-4497-436c-8109-13205066f0f0}</Project>
+      <Name>NorthwindSystem</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
@@ -292,9 +300,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>51895</DevelopmentServerPort>
+          <DevelopmentServerPort>61060</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:51895/</IISUrl>
+          <IISUrl>http://localhost:61060/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

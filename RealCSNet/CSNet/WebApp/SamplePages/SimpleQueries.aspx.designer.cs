@@ -10,7 +10,7 @@
 namespace WebApp.SamplePages {
     
     
-    public partial class Simple_Queries {
+    public partial class SimpleQueries {
         
         /// <summary>
         /// Label1 control.
@@ -40,13 +40,13 @@ namespace WebApp.SamplePages {
         protected global::System.Web.UI.WebControls.Label Label2;
         
         /// <summary>
-        /// Label3 control.
+        /// ProductID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label3;
+        protected global::System.Web.UI.WebControls.Label ProductID;
         
         /// <summary>
         /// Submit control.
