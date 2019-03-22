@@ -70,7 +70,7 @@ namespace NorthwindSystem.Data
         //[NotMapped]
         //public string FullName
         //{
-        //    get FirstName + " " + LastName;
+        //    get FirstName + " " + LastName; this does not work look on my exercise for right answer
         //}
     }
 }

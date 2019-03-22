@@ -29,7 +29,7 @@
         SetFocusOnError="true" ForeColor="Firebrick" ControlToValidate="PostalCode"></asp:RequiredFieldValidator>
     <asp:RequiredFieldValidator ID="RequiredFieldEmaillAddress" runat="server" ErrorMessage="Emaill Address is required." Display="none"
         SetFocusOnError="true" ForeColor="Firebrick" ControlToValidate="EmailAddress"></asp:RequiredFieldValidator>
-    <asp:RequiredFieldValidator ID="RequiredFieldCheck Answer" runat="server" ErrorMessage="You need to check mark the box idiot" Display="none"
+    <asp:RequiredFieldValidator ID="RequiredFieldCheckAnswer" runat="server" ErrorMessage="You need to check mark the box idiot" Display="none"
         SetFocusOnError="true" ForeColor="Firebrick" ControlToValidate="CheckAnswer"></asp:RequiredFieldValidator>
 
     <%-- Since we have no control to demostrate a range on, the streetaddress2 control will be used
