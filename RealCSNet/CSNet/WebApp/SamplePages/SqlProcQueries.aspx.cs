@@ -101,5 +101,10 @@ namespace WebApp.SamplePages
             CategoryProductList.DataSource = null;
             CategoryProductList.DataBind();
         }
+
+        protected void CategoryProductList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
