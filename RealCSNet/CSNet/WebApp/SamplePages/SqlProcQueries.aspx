@@ -23,9 +23,15 @@
             </tr>
             <tr>
                 <td align="center">
-                    <asp:GridView ID="CategoryProductList" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="CategoryProductList_SelectedIndexChanged" CellPadding="5" CellSpacing="5" GridLines="Horizontal" PageSize="6">
+                    <asp:GridView ID="CategoryProductList" runat="server" AutoGenerateColumns="False" OnSelectedIndexChanged="CategoryProductList_PageIndexChanging" CellPadding="5" CellSpacing="5" GridLines="Horizontal" PageSize="6" AllowPaging="True">
                         <AlternatingRowStyle BackColor="#000066" BorderColor="White" BorderStyle="None" />
                         <Columns>
+                            <asp:TemplateField Visible="False">
+                                <ItemTemplate>
+                                    <asp:Label ID="ProductID" runat="server" Text='<%# Eval("ProductID") %>'></asp:Label>
+                                </ItemTemplate>
+                                <ControlStyle BackColor="#9999FF" />
+                            </asp:TemplateField>
                             <asp:TemplateField HeaderText="Product">
                                 <ItemTemplate>
                                     <asp:Label ID="ProductName" runat="server" Text='<%# Eval("ProductName") %>'></asp:Label>
@@ -56,6 +62,7 @@
                                 <HeaderStyle Font-Bold="True" />
                                 <ItemStyle HorizontalAlign="Center" />
                             </asp:TemplateField>
+                            <asp:CommandField CausesValidation="False" SelectText="View" ShowSelectButton="True" />
                         </Columns>
                         <PagerSettings Mode="NumericFirstLast" />
                     </asp:GridView>
