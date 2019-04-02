@@ -141,5 +141,42 @@ namespace NorthwindSystem.BLL
                 return results.ToList();
             }
         }
-    }
-}
+
+        #region Add, Update and Delete of CRUD
+
+        // The add method will be used to insert a product instance into the database
+        // This method will recieve an instance of Product
+        // This method can optionally return the new identity primary key
+        public int Product_Add(Product Item)
+        {
+            // The addition of the data will be done in a transaction block 
+            using (var context = new NorthwindContext())
+            {
+                // Step 1: Staging
+                // one adds the new instance to the appropriate Dbset<T>
+                // the data needs to be in an instance of <T>
+                // staging does NOT place the record on the database
+                // if the primary key of the <T> is an identity type
+                //  the primary key is NOT yet set
+                context.Products.Add(Item);
+
+                // step 2: Committing Transaction
+                // if command to save your Dbset changes is NOT executed
+                //  the transaction fails and a Rollback is performed
+                // if the command to save your Dbset changes is executed and fails
+                //  the transaction is RollBacked and the appropriate error message
+                //  is issued
+                // at this point any entity validation is executed
+                // if the command to save your Dbset changes is successful then the
+                //  data is in the database (unless the database finds an exception)
+                // at this point your new identity primary key value is present in your
+                //  <T> instance and can be retrieved
+                context.SaveChanges();
+
+                // optionally you can return the new primary key value
+                return Item.ProductID;
+            }
+        }
+        #endregion
+    }// eoc
+}// eon
