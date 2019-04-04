@@ -19,6 +19,7 @@ namespace NorthwindSystem.BLL
     //    a particular data class (sql table)
     public class ProductController
     {
+        #region Queries
         //code methods which will be called for processing
         //methods will be public
         //these methods are referred to as the system interface
@@ -141,6 +142,7 @@ namespace NorthwindSystem.BLL
                 return results.ToList();
             }
         }
+        #endregion
 
         #region Add, Update and Delete of CRUD
 
@@ -177,6 +179,75 @@ namespace NorthwindSystem.BLL
                 return Item.ProductID;
             }
         }
+
+        //  Update
+        // this logic will maintain the entire database record when updating
+        // the result of the commit will return the number of rows affected
+        // input: an instance of your <T>, with the pkey value included
+        // output: rows affected
+
+        public int Product_Update(Product Item)
+        {
+            //transaction
+            using (var context = new NorthwindContext())
+            {
+                // staging
+                //  the entire record will be staged
+                // optionally
+                //  There may be additional attributes on your record 
+                //   that track when updates are done and/or track
+                //   who did the updates
+                // these attributes are filled by the logic in this
+                //  controller and SHOULD NOT be expected from the user
+                // for example: Item.LastModified = DateTime.Now;
+                context.Entry(Item).State = System.Data.Entity.EntityState.Modified;
+
+                //commit
+                // this will return the number or rows affected
+                return context.SaveChanges();
+            }
+        }
+
+        // Delete (2 types)
+        //  physical delete: physical removal of the record from the database
+        //  logical delete: usually some record attribute is set to indicate that
+        //                   this record should be ignored
+        // input: pkey value of the record
+        // output: rows affected
+        public int Product_Delete(int ProductID)
+        {
+            // transaction 
+            using (var context = new NorthwindContext())
+            {
+                // physical delete
+                //  removal of record from the database
+
+                //  find and retain the record to remove
+                //var existing = context.Products.Find(ProductID);
+                //  stage record for removal
+                // context.Products.Remove(existing);
+                //  commit
+                // return context.SaveChanges();
+
+                // logical
+                //  this action will actually be an update
+                //  any attributes that are required for tracking
+                //   need to be handled
+                //  the attribute that indicates the record is logically
+                //   removed need to be handled
+
+                // find record to be "deleted"
+                var existing = context.Products.Find(ProductID);
+                // adjust logical/tracking attributes
+                // existing.LastModified = DateTime.Now;
+                existing.Discontinued = true;
+                // stage for update
+                context.Entry(existing).State = System.Data.Entity.EntityState.Modified;
+                // commit
+                return context.SaveChanges();
+            }
+        }
+
         #endregion
     }// eoc
 }// eon
