@@ -82,13 +82,6 @@ namespace NorthwindSystem.BLL
                 return results.ToList();
             }
         }
-
-        //to query your database using a non primary key value
-        //this will require a sql procedure to call
-        //the namespace System.Data.SqlClient is required
-        //the returning datatype is IEnumerable<T>
-        //this returning datatype will be cast using ToList() on the return
-
         public List<Product> Products_GetByPartialProductName(string partialname)
         {
             using (var context = new NorthwindContext())
@@ -99,6 +92,8 @@ namespace NorthwindSystem.BLL
                 return results.ToList();
             }
         }
+
+      
 
         public List<Product> Products_GetBySupplierPartialProductName(int supplierid, string partialproductname)
         {
@@ -146,108 +141,109 @@ namespace NorthwindSystem.BLL
 
         #region Add, Update and Delete of CRUD
 
-        // The add method will be used to insert a product instance into the database
-        // This method will recieve an instance of Product
-        // This method can optionally return the new identity primary key
-        public int Product_Add(Product Item)
+        //The Add method will be used to insert a product instance into the database
+        //This method will recieve an instance of Product
+        //This method can optionally return the new identity primary key
+        public int Product_Add(Product item)
         {
-            // The addition of the data will be done in a transaction block 
+            //the addition of the data will be done in a transaction block
             using (var context = new NorthwindContext())
             {
-                // Step 1: Staging
-                // one adds the new instance to the appropriate Dbset<T>
-                // the data needs to be in an instance of <T>
-                // staging does NOT place the record on the database
-                // if the primary key of the <T> is an identity type
-                //  the primary key is NOT yet set
-                context.Products.Add(Item);
 
-                // step 2: Committing Transaction
-                // if command to save your Dbset changes is NOT executed
-                //  the transaction fails and a Rollback is performed
-                // if the command to save your Dbset changes is executed and fails
-                //  the transaction is RollBacked and the appropriate error message
-                //  is issued
-                // at this point any entity validation is executed
-                // if the command to save your Dbset changes is successful then the
-                //  data is in the database (unless the database finds an exception)
-                // at this point your new identity primary key value is present in your
-                //  <T> instance and can be retrieved
+                //Step 1: Staging
+                //one adds the new instance to the appropriate DbSet<T>
+                //the data needs to be in an instance of <T> 
+                //staging does NOT place the record on the database
+                //if the primary key of the <T> is an identity type
+                //    the pkey value is NOT yet set
+                context.Products.Add(item);
+
+                //step 2: Committing transaction
+                //if the command to save your DbSet changes is NOT executed
+                //   the transaction fails and a RollBack is performed
+                //if the command to save your DbSet changes is executed and fails
+                //   the transaction is RollBacked and the appropriate error message
+                //   is issued
+                //at this point ANY entity validation is executed
+                //if the command to save your DbSet changes is successful then the
+                //   data is in the database (unless the database finds an exception)
+                //at this point your new identity pkey value is present in your
+                //   <T> instance and can be retrieved
                 context.SaveChanges();
 
-                // optionally you can return the new primary key value
-                return Item.ProductID;
+                //optionally you can return the new pKey value
+                return item.ProductID;
             }
         }
 
-        //  Update
-        // this logic will maintain the entire database record when updating
-        // the result of the commit will return the number of rows affected
-        // input: an instance of your <T>, with the pkey value included
-        // output: rows affected
-
-        public int Product_Update(Product Item)
+        //Update
+        //this logic will maintain the entire database record when updating
+        //the result of the commit will return the number of rows affected
+        //input: an instance of your <T>, with the pkey value included
+        //output: rows affected
+        public int Product_Update(Product item)
         {
             //transaction
             using (var context = new NorthwindContext())
             {
-                // staging
-                //  the entire record will be staged
-                // optionally
-                //  There may be additional attributes on your record 
-                //   that track when updates are done and/or track
-                //   who did the updates
-                // these attributes are filled by the logic in this
-                //  controller and SHOULD NOT be expected from the user
-                // for example: Item.LastModified = DateTime.Now;
-                context.Entry(Item).State = System.Data.Entity.EntityState.Modified;
+                //staging
+                //the entire record will be staged
+                //optionally
+                //   there may be additional attributes on your
+                //   record that track when updates are done and/or
+                //   track who did the updates
+                //   these attributes are filled by the logic in 
+                //   this control and SHOULD NOT be expected from
+                //   the user
+                //item.LastModified = DateTime.Now;
+                context.Entry(item).State = System.Data.Entity.EntityState.Modified;
 
                 //commit
-                // this will return the number or rows affected
+                //this will return the number of rows affected
                 return context.SaveChanges();
+
             }
         }
 
-        // Delete (2 types)
-        //  physical delete: physical removal of the record from the database
-        //  logical delete: usually some record attribute is set to indicate that
-        //                   this record should be ignored
-        // input: pkey value of the record
-        // output: rows affected
-        public int Product_Delete(int ProductID)
+        //Delete
+        //physical delete: physical removal of the record from the database
+        //logical delete: usually some record attribute is set to indicate
+        //                that this record should be ignored
+        //input: the pkey value of the record
+        //output: rows affected
+        public int Product_Delete(int productid)
         {
-            // transaction 
+            //transaction
             using (var context = new NorthwindContext())
             {
-                // physical delete
+                //physical
                 //  removal of record from the database
 
-                //  find and retain the record to remove
-                //var existing = context.Products.Find(ProductID);
-                //  stage record for removal
-                // context.Products.Remove(existing);
-                //  commit
-                // return context.SaveChanges();
+                ////find and retain the record to remove
+                //var existing = context.Products.Find(productid);
+                ////stage record for removal
+                //context.Products.Remove(existing);
+                ////commit
+                //return context.SaveChanges();
 
-                // logical
-                //  this action will actually be an update
+                //logical
+                //  this action will actually be an Update
                 //  any attributes that are required for tracking
-                //   need to be handled
+                //      need to be handled
                 //  the attribute that indicates the record is logically
-                //   removed need to be handled
+                //      removed needs to be handled
 
-                // find record to be "deleted"
-                var existing = context.Products.Find(ProductID);
-                // adjust logical/tracking attributes
-                // existing.LastModified = DateTime.Now;
+                //find record to be "deleted"
+                var existing = context.Products.Find(productid);
+                //adjust logical/tracking attributes
+                //existing.LastModified = DateTime.Now;
                 existing.Discontinued = true;
-                // stage for update
+                //stage for update
                 context.Entry(existing).State = System.Data.Entity.EntityState.Modified;
-                // commit
+                //commit
                 return context.SaveChanges();
             }
         }
-
         #endregion
-    }// eoc
-}// eon
+    }//eoc
+}//eon

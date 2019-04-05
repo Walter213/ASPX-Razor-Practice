@@ -21,17 +21,18 @@ namespace WebApp.NorthwindPages
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            //empty out all old messages from the Datalist
+            //empty out all old messages from the DataList
             Message.DataSource = null;
             Message.DataBind();
 
-            // load the dropdown lists on the form
+            //load the dropdown lists on the form
             if (!Page.IsPostBack)
             {
                 BindProductList();
                 BindSupplierList();
                 BindCategoryList();
             }
+
         }
 
         protected void BindProductList()
@@ -45,9 +46,9 @@ namespace WebApp.NorthwindPages
                 ProductList.DataTextField = nameof(Product.ProductName);
                 ProductList.DataValueField = nameof(Product.ProductID);
                 ProductList.DataBind();
-                ProductList.Items.Insert(1, "select ...");
+                ProductList.Items.Insert(0, "select ...");
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 errormsgs.Add(GetInnerException(ex).Message);
                 LoadMessageDisplay(errormsgs, "alert alert-danger");
@@ -65,7 +66,7 @@ namespace WebApp.NorthwindPages
                 SupplierList.DataTextField = nameof(Supplier.CompanyName);
                 SupplierList.DataValueField = nameof(Supplier.SupplierID);
                 SupplierList.DataBind();
-                SupplierList.Items.Insert(1, "select ...");
+                SupplierList.Items.Insert(0, "select ...");
             }
             catch (Exception ex)
             {
@@ -85,7 +86,7 @@ namespace WebApp.NorthwindPages
                 CategoryList.DataTextField = nameof(Category.CategoryName);
                 CategoryList.DataValueField = nameof(Category.CategoryID);
                 CategoryList.DataBind();
-                CategoryList.Items.Insert(1, "select ...");
+                CategoryList.Items.Insert(0, "select ...");
             }
             catch (Exception ex)
             {
@@ -131,136 +132,132 @@ namespace WebApp.NorthwindPages
 
         protected void AddProduct_Click(object sender, EventArgs e)
         {
-            // execute your form validation 
-            //if (!Page.IsValid)
+            //execute your form validation
+            //if (Page.IsValid)
             //{
-            // any logic validation on covered by form validation
-            // for this example, i will assume that the CategoryID
-            //    and SupplierID
-            if (SupplierList.SelectedIndex == 0)
-            {
-                errormsgs.Add("Select a supplier");
-            }
-            if (CategoryList.SelectedIndex == 0)
-            {
-                errormsgs.Add("Select a category");
-            }
-
-            // did one pass all logical validation
-            if (errormsgs.Count() > 0)
-            {
-                LoadMessageDisplay(errormsgs, "alert alert-info");
-            }
-            else
-            {
-                try
+                //any logic validation on covered by form validation
+                //for this example, I will assume that the CategoryID
+                //     and SupplierID are needed
+                if (SupplierList.SelectedIndex == 0)
                 {
-                    // create an instance of <T>
-                    Product item = new Product();
-                    // extract data from form and load <T>
-                    item.ProductName = ProductName.Text;
-                    item.SupplierID = int.Parse(SupplierList.SelectedValue);
-                    item.CategoryID = int.Parse(CategoryList.SelectedValue);
-                    item.QuantityPerUnit = string.IsNullOrEmpty(QuantityPerUnit.Text.Trim()) ? null : QuantityPerUnit.Text;
-
-                    if (string.IsNullOrEmpty(UnitPrice.Text.Trim()))
-                    {
-                        item.UnitPrice = null;
-                    }
-                    else
-                    {
-                        item.UnitPrice = decimal.Parse(UnitPrice.Text.Trim());
-                    }
-
-                    if (string.IsNullOrEmpty(UnitsInStock.Text.Trim()))
-                    {
-                        item.UnitsInStock = null;
-                    }
-                    else
-                    {
-                        item.UnitPrice = Int16.Parse(UnitPrice.Text.Trim());
-                    }
-
-                    if (string.IsNullOrEmpty(UnitsOnOrder.Text.Trim()))
-                    {
-                        item.UnitsOnOrder = null;
-                    }
-                    else
-                    {
-                        item.UnitsOnOrder = Int16.Parse(UnitPrice.Text.Trim());
-                    }
-
-                    if (string.IsNullOrEmpty(ReorderLevel.Text.Trim()))
-                    {
-                        item.ReorderLevel = null;
-                    }
-                    else
-                    {
-                        item.ReorderLevel = Int16.Parse(UnitPrice.Text.Trim());
-                    }
-
-                    item.Discontinued = false;
-
-                    // connect to appropriate BLL class
-                    ProductController sysmgr = new ProductController();
-
-                    // issue a call to the appropriate BLL method passing
-                    //  the instance of <T>
-                    int newProductID = sysmgr.Product_Add(item);
-
-                    // handle the results
-                    errormsgs.Add(ProductName.Text + " has been added to the database with an ID of " + newProductID.ToString());
-                    LoadMessageDisplay(errormsgs, "alert alert-success");
-
-                    // refresh of the web page/web controls
-                    // display the new product id in its field
-                    ProductID.Text = newProductID.ToString();
-                    BindProductList();
-                    ProductList.SelectedValue = ProductID.Text;
+                    errormsgs.Add("Select a supplier");
+                }
+                if (CategoryList.SelectedIndex == 0)
+                {
+                    errormsgs.Add("Select a category");
                 }
 
-                catch (DbUpdateException ex)
+                //did one pass all logic validation
+                if (errormsgs.Count() > 0)
                 {
-                    UpdateException updateException = (UpdateException)ex.InnerException;
-                    if (updateException.InnerException != null)
-                    {
-                        errormsgs.Add(updateException.InnerException.Message.ToString());
-                    }
-                    else
-                    {
-                        errormsgs.Add(updateException.Message);
-                    }
-                    LoadMessageDisplay(errormsgs, "alert alert-danger");
+                    LoadMessageDisplay(errormsgs, "alert alert-info");
                 }
-                catch (DbEntityValidationException ex)
+                else
                 {
-                    foreach (var entityValidationErrors in ex.EntityValidationErrors)
+                    try
                     {
-                        foreach (var validationError in entityValidationErrors.ValidationErrors)
+                        //create an instance of <T>
+                        Product item = new Product();
+                        //extract data from form and load <T>
+                        item.ProductName = ProductName.Text;
+                        item.SupplierID = int.Parse(SupplierList.SelectedValue);
+                        item.CategoryID = int.Parse(CategoryList.SelectedValue);
+                        item.QuantityPerUnit = string.IsNullOrEmpty(QuantityPerUnit.Text.Trim()) ?
+                            null : QuantityPerUnit.Text;
+                        if (string.IsNullOrEmpty(UnitPrice.Text.Trim()))
                         {
-                            errormsgs.Add(validationError.ErrorMessage);
+                            item.UnitPrice = null;
                         }
+                        else
+                        {
+                            item.UnitPrice = decimal.Parse(UnitPrice.Text.Trim());
+                        }
+                        if (string.IsNullOrEmpty(UnitsInStock.Text.Trim()))
+                        {
+                            item.UnitsInStock = null;
+                        }
+                        else
+                        {
+                            item.UnitsInStock = Int16.Parse(UnitsInStock.Text.Trim());
+                        }
+                        if (string.IsNullOrEmpty(UnitsOnOrder.Text.Trim()))
+                        {
+                            item.UnitsOnOrder = null;
+                        }
+                        else
+                        {
+                            item.UnitsOnOrder = Int16.Parse(UnitsOnOrder.Text.Trim());
+                        }
+                        if (string.IsNullOrEmpty(ReorderLevel.Text.Trim()))
+                        {
+                            item.ReorderLevel = null;
+                        }
+                        else
+                        {
+                            item.ReorderLevel = Int16.Parse(ReorderLevel.Text.Trim());
+                        }
+                        //logically this is a new product, therefore discontinued can
+                        //    be set for the user to false
+                        item.Discontinued = false;
+                        //connect to appropriate BLL class
+                        ProductController sysgmr = new ProductController();
+                        //issue a call to the appropriate BLL method passing
+                        //   the instance of <T>
+                        int newProductID = sysgmr.Product_Add(item);
+                        //handle the results
+                        errormsgs.Add(ProductName.Text + " has been added to the database with an id of " + newProductID.ToString());
+                        LoadMessageDisplay(errormsgs, "alert alert-success");
+
+                        //refresh of the web page/web controls
+                        //display the new productid in its field
+                        ProductID.Text = newProductID.ToString();
+                        BindProductList();
+                        ProductList.SelectedValue = ProductID.Text;
+                        
                     }
-                    LoadMessageDisplay(errormsgs, "alert alert-danger");
-                }
-                catch (Exception ex)
-                {
-                    errormsgs.Add(GetInnerException(ex).ToString());
-                    LoadMessageDisplay(errormsgs, "alert alert-danger");
-                }
+                    catch (DbUpdateException ex)
+                    {
+                        UpdateException updateException = (UpdateException)ex.InnerException;
+                        if (updateException.InnerException != null)
+                        {
+                            errormsgs.Add(updateException.InnerException.Message.ToString());
+                        }
+                        else
+                        {
+                            errormsgs.Add(updateException.Message);
+                        }
+                        LoadMessageDisplay(errormsgs, "alert alert-danger");
+                    }
+                    catch (DbEntityValidationException ex)
+                    {
+                        foreach (var entityValidationErrors in ex.EntityValidationErrors)
+                        {
+                            foreach (var validationError in entityValidationErrors.ValidationErrors)
+                            {
+                                errormsgs.Add(validationError.ErrorMessage);
+                            }
+                        }
+                        LoadMessageDisplay(errormsgs, "alert alert-danger");
+                    }
+                    catch (Exception ex)
+                    {
+                        errormsgs.Add(GetInnerException(ex).ToString());
+                        LoadMessageDisplay(errormsgs, "alert alert-danger");
+                    }
 
 
-            }
+                }
+            //}
         }
-        //}
+
         protected void UpdateProduct_Click(object sender, EventArgs e)
         {
-            // execute your form validation 
-            //if (!Page.IsValid)
+            //execute your form validation
+            //if (Page.IsValid)
             //{
-            // any logic validation on covered by form validation
-            // for this example, i will assume that the CategoryID
-            //    and SupplierID
+            //any logic validation on covered by form validation
+            //for this example, I will assume that the CategoryID
+            //     and SupplierID are needed
             if (SupplierList.SelectedIndex == 0)
             {
                 errormsgs.Add("Select a supplier");
@@ -270,13 +267,13 @@ namespace WebApp.NorthwindPages
                 errormsgs.Add("Select a category");
             }
 
-            // on the update you MUST ensure that the record's pkey value is present 
+            //on the update you MUST ensure that the record's pkey value is present
             if (string.IsNullOrEmpty(ProductID.Text.Trim()))
             {
-                errormsgs.Add("Search for the product to be maintained");
+                errormsgs.Add("Search for the product to be maintained.");
             }
 
-            // did one pass all logical validation
+            //did one pass all logic validation
             if (errormsgs.Count() > 0)
             {
                 LoadMessageDisplay(errormsgs, "alert alert-info");
@@ -285,19 +282,19 @@ namespace WebApp.NorthwindPages
             {
                 try
                 {
-                    // create an instance of <T>
+                    //create an instance of <T>
                     Product item = new Product();
-                    // extract data from form and load <T>
+                    //extract data from form and load <T>
 
-                    // on the update you MUST ensure that the record's pkey value
-                    //  is loaded to the instance
+                    //on the update you MUST ensure that the record's pkey value
+                    //    is loaded to the instance
                     item.ProductID = int.Parse(ProductID.Text.Trim());
 
                     item.ProductName = ProductName.Text;
                     item.SupplierID = int.Parse(SupplierList.SelectedValue);
                     item.CategoryID = int.Parse(CategoryList.SelectedValue);
-                    item.QuantityPerUnit = string.IsNullOrEmpty(QuantityPerUnit.Text.Trim()) ? null : QuantityPerUnit.Text;
-
+                    item.QuantityPerUnit = string.IsNullOrEmpty(QuantityPerUnit.Text.Trim()) ?
+                        null : QuantityPerUnit.Text;
                     if (string.IsNullOrEmpty(UnitPrice.Text.Trim()))
                     {
                         item.UnitPrice = null;
@@ -306,66 +303,58 @@ namespace WebApp.NorthwindPages
                     {
                         item.UnitPrice = decimal.Parse(UnitPrice.Text.Trim());
                     }
-
                     if (string.IsNullOrEmpty(UnitsInStock.Text.Trim()))
                     {
                         item.UnitsInStock = null;
                     }
                     else
                     {
-                        item.UnitPrice = Int16.Parse(UnitPrice.Text.Trim());
+                        item.UnitsInStock = Int16.Parse(UnitsInStock.Text.Trim());
                     }
-
                     if (string.IsNullOrEmpty(UnitsOnOrder.Text.Trim()))
                     {
                         item.UnitsOnOrder = null;
                     }
                     else
                     {
-                        item.UnitsOnOrder = Int16.Parse(UnitPrice.Text.Trim());
+                        item.UnitsOnOrder = Int16.Parse(UnitsOnOrder.Text.Trim());
                     }
-
                     if (string.IsNullOrEmpty(ReorderLevel.Text.Trim()))
                     {
                         item.ReorderLevel = null;
                     }
                     else
                     {
-                        item.ReorderLevel = Int16.Parse(UnitPrice.Text.Trim());
+                        item.ReorderLevel = Int16.Parse(ReorderLevel.Text.Trim());
                     }
 
-                    // on an update, you take the value from the control
+                    //on an update, you take the value from the control
                     item.Discontinued = Discontinued.Checked;
 
-                    // connect to appropriate BLL class
-                    ProductController sysmgr = new ProductController();
 
-                    // issue a call to the appropriate BLL method passing
-                    //  the instance of <T>
-                    int rowsaffected = sysmgr.Product_Update(item);
-
-                    // handle the results
+                    //connect to appropriate BLL class
+                    ProductController sysgmr = new ProductController();
+                    //issue a call to the appropriate BLL method passing
+                    //   the instance of <T>
+                    int rowsaffected = sysgmr.Product_Update(item);
+                    //handle the results
                     if (rowsaffected == 0)
                     {
-                        errormsgs.Add(ProductName.Text + " has been updated. Search the product again");
+                        errormsgs.Add(ProductName.Text + " has not been updated. Search the product again");
                         LoadMessageDisplay(errormsgs, "alert alert-warning");
-
                         //consider refreshing the necessary controls on your form
                         BindProductList();
                         ProductID.Text = "";
                     }
                     else
                     {
-                        errormsgs.Add(ProductName.Text + " has been updated");
-                        LoadMessageDisplay(errormsgs, "alert alert-success");
-
-                        // consider refreshing the necessary controls on your form
+                         errormsgs.Add(ProductName.Text + " has been updated");
+                         LoadMessageDisplay(errormsgs, "alert alert-success");
+                        //consider refreshing the necessary controls on your form
                         BindProductList();
                         ProductList.SelectedValue = ProductID.Text;
-
                     }
                 }
-
                 catch (DbUpdateException ex)
                 {
                     UpdateException updateException = (UpdateException)ex.InnerException;
@@ -398,17 +387,18 @@ namespace WebApp.NorthwindPages
 
 
             }
+            //}
         }
 
         protected void RemoveProduct_Click(object sender, EventArgs e)
-        {            
-            // on the update you MUST ensure that the record's pkey value is present 
+        {
+            //on the update you MUST ensure that the record's pkey value is present
             if (string.IsNullOrEmpty(ProductID.Text.Trim()))
             {
-                errormsgs.Add("Search for the product to be maintained");
+                errormsgs.Add("Search for the product to be maintained.");
             }
 
-            // did one pass all logical validation
+            //did one pass all logic validation
             if (errormsgs.Count() > 0)
             {
                 LoadMessageDisplay(errormsgs, "alert alert-info");
@@ -416,20 +406,18 @@ namespace WebApp.NorthwindPages
             else
             {
                 try
-                {                   
-                    // connect to appropriate BLL class
-                    ProductController sysmgr = new ProductController();
+                {
 
-                    // issue a call to the appropriate BLL method passing
-                    //  the instance of <T>
-                    int rowsaffected = sysmgr.Product_Delete (int.Parse(ProductID.Text.Trim()));
-
-                    // handle the results
+                    //connect to appropriate BLL class
+                    ProductController sysgmr = new ProductController();
+                    //issue a call to the appropriate BLL method passing
+                    //   the instance of <T>
+                    int rowsaffected = sysgmr.Product_Delete(int.Parse(ProductID.Text.Trim()));
+                    //handle the results
                     if (rowsaffected == 0)
                     {
-                        errormsgs.Add(ProductName.Text + " has been discontinued. Search the product again");
+                        errormsgs.Add(ProductName.Text + " has not been discontinued. Search the product again");
                         LoadMessageDisplay(errormsgs, "alert alert-warning");
-
                         //consider refreshing the necessary controls on your form
                         BindProductList();
                         ProductID.Text = "";
@@ -438,23 +426,22 @@ namespace WebApp.NorthwindPages
                     {
                         errormsgs.Add(ProductName.Text + " has been discontinued");
                         LoadMessageDisplay(errormsgs, "alert alert-success");
+                        //consider refreshing the necessary controls on your form
 
-                        // consider refreshing the necessary controls on your form
+                        ////physical delete
+                        //BindProductList();
+                        //ProductID.Text = "";
+                        ////optionally, clear the form, client decision
+                        //Clear_Click(sender, new EventArgs());
 
-                        // physical delete
-                        // BindProductList();
-                        // ProductID.Text = "";
-                        //  optionally, clear the form, client decision
-                        // Clear_Click(sender, new EventArgs());
 
-                        // logical delete
+                        //logical delete
                         BindProductList();
-                        // refresh form controls to indicate the removal
+                        //refresh form controls to indicate removal
                         Discontinued.Checked = true;
                         ProductList.SelectedValue = ProductID.Text;
                     }
                 }
-
                 catch (DbUpdateException ex)
                 {
                     UpdateException updateException = (UpdateException)ex.InnerException;
