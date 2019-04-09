@@ -9,10 +9,12 @@ using System.Threading.Tasks;
 using NorthwindSystem.Data;     //access to data definitions
 using NorthwindSystem.DAL;      //access to context class
 using System.Data.SqlClient;    //access to SqlParameter()
+using System.ComponentModel;
 #endregion
 
 namespace NorthwindSystem.BLL
 {
+    [DataObject]
     //this class will be called from an external source
     //in our example, this source will be the web page
     //naming standard is <T>Controller which represents
@@ -52,7 +54,7 @@ namespace NorthwindSystem.BLL
                 return context.Products.ToList();
             }
         }
-    
+
 
         //at times you will need to do a NON-PRIMARY KEY lookup
         //you will NOT be able to use .Find(pkey)
@@ -68,6 +70,7 @@ namespace NorthwindSystem.BLL
         //SqlParameter takes two arguments
         // a) procedure parameter name
         // b) value to be passed
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
         public List<Product> Product_GetByCategory(int categoryid)
         {
             using (var context = new NorthwindContext())
