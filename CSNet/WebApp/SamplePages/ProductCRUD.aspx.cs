@@ -244,8 +244,6 @@ namespace WebApp.NorthwindPages
                         errormsgs.Add(GetInnerException(ex).ToString());
                         LoadMessageDisplay(errormsgs, "alert alert-danger");
                     }
-
-
                 }
             //}
         }

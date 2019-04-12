@@ -190,7 +190,6 @@ namespace WebApp.NorthwindPages
                         //GridView
                         ProductGridViewV2.DataSource = info;
                         ProductGridViewV2.DataBind();
-
                     }
                 }
                 catch (Exception ex)
@@ -233,11 +232,9 @@ namespace WebApp.NorthwindPages
                     else
                     {
                         info.Sort((x, y) => x.ProductName.CompareTo(y.ProductName));
-
-                        //GridView
+                        
                         ProductGridViewV3.DataSource = info;
                         ProductGridViewV3.DataBind();
-
                     }
                 }
                 catch (Exception ex)
